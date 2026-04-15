@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* 1. Theme Configuration (The v4 way) */
+@theme {
+  /* Default Shadcn Colors - Mapped to your HSL values */
+  --color-background: hsl(150 30% 2%);
+  --color-foreground: hsl(40 10% 92%);
+
+  --color-card: hsl(150 25% 5%);
+  --color-card-foreground: hsl(40 10% 92%);
+
+  --color-popover: hsl(150 25% 5%);
+  --color-popover-foreground: hsl(40 10% 92%);
+
+  --color-primary: hsl(150 30% 8%);
+  --color-primary-foreground: hsl(40 10% 92%);
+
+  --color-secondary: hsl(42 45% 65%);
+  --color-secondary-foreground: hsl(150 30% 2%);
+
+  --color-muted: hsl(150 15% 8%);
+  --color-muted-foreground: hsl(150 15% 55%);
+
+  --color-accent: hsl(150 20% 10%);
+  --color-accent-foreground: hsl(42 45% 75%);
+
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(40 10% 92%);
+
+  --color-border: hsl(150 10% 12%);
+  --color-input: hsl(150 10% 12%);
+  --color-ring: hsl(42 45% 65%);
+
+  --radius-lg: 0.25rem;
+  --radius-md: calc(0.25rem - 2px);
+  --radius-sm: calc(0.25rem - 4px);
+
+  /* Custom Premium Tokens */
+  --color-gold: hsl(42 45% 65%);
+  --color-gold-glow: hsl(42 50% 78%);
+  --color-obsidian: hsl(150 30% 2%);
+  --color-emerald-glass: hsl(152 40% 8%);
+
+  /* Custom Fonts */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  /* Custom Shadows */
+  --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
+  --shadow-glow-gold: 0 8px 30px -6px hsl(42 45% 65% / 0.2);
+}
+
+/* 2. Base Styles */
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..400&family=Manrope:wght@200..700&display=swap');
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+/* 3. Custom Utilities (The v4 @utility directive) */
+@utility text-gradient-gold {
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(135deg, var(--color-gold), var(--color-gold-glow));
+}
+
+@utility bg-glass {
+  background: hsl(var(--color-emerald-glass) / 0.4);
+  backdrop-filter: blur(24px);
+}
+
+@utility shadow-glow-gold {
+  box-shadow: var(--shadow-glow-gold);
+}
+
+@utility line-gold {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, hsl(var(--color-gold) / 0.3), transparent);
+}
