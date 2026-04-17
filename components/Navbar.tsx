@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -44,12 +45,12 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#donate"
+          <Link
+            href="/donate"
             className="px-6 py-2.5 border border-gold/30 text-gold text-xs font-medium tracking-[0.1em] uppercase hover:bg-gold hover:text-gold-foreground transition-all duration-500"
           >
             Support Us
-          </a>
+          </Link>
         </div>
 
         <button
@@ -80,13 +81,13 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#donate"
+              <Link
+                href="/donate"
                 onClick={() => setOpen(false)}
                 className="px-5 py-3 border border-gold/30 text-gold font-body font-medium text-center text-sm uppercase tracking-widest"
               >
                 Support Us
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}
