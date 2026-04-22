@@ -1,23 +1,27 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 3rem 1.5rem;
 }
 
+/* ── Logo ───────────────────────────── */
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  height: 5em;
+  padding: 1rem;
+  transition: transform 250ms ease, filter 250ms ease;
 }
 
+.logo:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.08));
+}
+
+/* Optional subtle brand hover accents */
+.logo.react:hover {
+  filter: drop-shadow(0 6px 20px rgba(97, 218, 251, 0.25));
+}
+
+/* ── Animation (kept but softer) ───── */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -29,15 +33,22 @@
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+    animation: logo-spin infinite 30s linear; /* slower = more premium */
   }
 }
 
+/* ── Card ──────────────────────────── */
 .card {
-  padding: 2em;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb; /* subtle gray border */
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  text-align: left;
 }
 
+/* ── Secondary text ───────────────── */
 .read-the-docs {
-  color: #888;
+  color: #6b7280; /* better contrast than #888 */
+  font-size: 0.95rem;
 }
-

@@ -1,15 +1,8 @@
 "use client";
 
 import Image from "next/image";
-
-/**
- * TEAM PHOTOS SETUP
- * Place photos in: /public/team/
- *   - /public/team/samuel-njai.jpg
- *   - /public/team/zennah-karingi.jpg
- *   - /public/team/damaris-maina.jpg
- *   - /public/team/[4th-member].jpg  ← update when received
- */
+import { Heart, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface TeamMember {
   name: string;
@@ -17,7 +10,7 @@ interface TeamMember {
   title?: string;
   statement: string;
   photo: string;
-  objectPosition?: string; // per-person crop control
+  objectPosition?: string;
   isFounder?: boolean;
 }
 
@@ -26,9 +19,9 @@ const TEAM: TeamMember[] = [
     name: "Samuel Njai Gikonyo",
     role: "Founder",
     statement:
-      "We believe cancer can be stopped before it starts through awareness, lifestyle transformation and trusted blockchain systems that unify health data for collective action.",
+      "We believe cancer can be stopped before it starts through awareness, lifestyle transformation and trusted systems that unify health data for collective action.",
     photo: "/team/samuel-njai.jpeg",
-    objectPosition: "center 20%", // full body shot — show from top
+    objectPosition: "center 20%",
     isFounder: true,
   },
   {
@@ -37,228 +30,166 @@ const TEAM: TeamMember[] = [
     statement:
       "We believe one day the world will be cancer-free. We aim to bridge the gap in healthcare for those affected while prioritizing prevention and keeping people healthy.",
     photo: "/team/zennah-karingi.jpeg",
-    objectPosition: "center 15%", // pull frame up so full face + shoulders show
+    objectPosition: "center 15%",
+    isFounder: true,
   },
   {
     name: "Dr. Damaris Mukami Maina",
     role: "Director & Chief Medical Specialist",
     title: "Cancer Prevention & Health Knowledge",
     statement:
-      "Evidence-based prevention is our strongest weapon. By combining medical expertise with accessible health education, we empower communities to take control of their wellbeing.",
+      "Evidence-based prevention is our strongest weapon. By combining medical expertise with accessible health education, we empower communities.",
     photo: "/team/damaris-maina.jpeg",
-    objectPosition: "center 10%", // she's centred in shot — pull up to show more
+    objectPosition: "center 10%",
   },
   {
-    name: "Coming Soon",
-    role: "Team Member",
-    statement: "",
-    photo: "",
-    objectPosition: "center center",
+    name: "Ruth Ngima Biru",
+    role: "Director of Oncology Support Services",
+    statement:
+      "Compassion must be systematic. We provide the structural support families need to navigate the complexities of oncology care and recovery.",
+    photo: "/team/ruth-1.jpeg",
+    objectPosition: "center",
+  },
+  {
+    name: "Abdallah Juma",
+    role: "Technical Support & Setup Team",
+    statement:
+      "Transparency is engineered. We build the technical infrastructure that ensures every donation and health record is immutable and verified.",
+    photo: "/team/abdallah.jpeg",
+    objectPosition: "center",
   },
 ];
 
 function Initials({ name }: { name: string }) {
   const parts = name.split(" ").filter(Boolean);
-  const initials =
-    parts.length >= 2 ? parts[0][0] + parts[parts.length - 1][0] : parts[0]?.[0] ?? "?";
-  return (
-    <span style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 300, color: "var(--color-pink)", letterSpacing: "0.2em" }}>
-      {initials.toUpperCase()}
-    </span>
-  );
+  const initials = parts.length >= 2 ? parts[0][0] + parts[parts.length - 1][0] : parts[0]?.[0] ?? "?";
+  return <span className="font-display text-2xl font-light text-pink-400 tracking-widest uppercase">{initials}</span>;
 }
 
 function MemberCard({ member }: { member: TeamMember }) {
-  const hasPhoto = !!member.photo;
-  const isPlaceholder = member.name === "Coming Soon";
-
   return (
-    <div className={[
-      "group relative flex flex-col overflow-hidden transition-all duration-500",
-      "border rounded-sm",
-      member.isFounder
-        ? "border-secondary/30 md:col-span-2"
-        : "border-border hover:border-pink-500/25",
-    ].join(" ")}
-      style={{
-        background: "hsl(150 25% 5%)",
-        boxShadow: member.isFounder
-          ? "0 0 0 1px hsl(42 45% 65% / 0.08), 0 8px 32px -8px hsl(42 45% 65% / 0.15)"
-          : "none",
-      }}
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className={`
+        group relative flex flex-col overflow-hidden transition-all duration-700
+        bg-card border border-border rounded-sm
+        ${member.isFounder ? "md:col-span-2 shadow-soft" : "col-span-1"}
+      `}
     >
-      {/* Top accent line — gold for founder, pink for others */}
-      <div className="h-px w-full" style={{
-        background: member.isFounder
-          ? "linear-gradient(90deg, transparent, hsl(42 45% 65% / 0.5), transparent)"
-          : "linear-gradient(90deg, transparent, hsl(338 65% 62% / 0.4), transparent)",
-      }} />
+      {/* Top Accent Line */}
+      <div className={`h-px w-full ${member.isFounder ? 'bg-gradient-to-r from-transparent via-gold/40 to-transparent' : 'bg-gradient-to-r from-transparent via-pink-400/20 to-transparent'}`} />
 
-      <div className={[
-        "flex gap-0",
-        member.isFounder ? "md:flex-row flex-col" : "flex-col",
-      ].join(" ")}>
-
-        {/* ── Photo ─────────────────────────────────── */}
-        <div className={[
-          "relative flex-shrink-0 overflow-hidden",
-          member.isFounder ? "md:w-56 w-full h-64 md:h-auto md:min-h-[260px]" : "w-full h-56",
-        ].join(" ")}
-          style={{
-            borderRight: member.isFounder ? "1px solid hsl(42 45% 65% / 0.12)" : "none",
-            borderBottom: !member.isFounder ? "1px solid hsl(338 65% 62% / 0.12)" : "none",
-          }}
-        >
-          {hasPhoto ? (
+      <div className={`flex ${member.isFounder ? "md:flex-row flex-col" : "flex-col"}`}>
+        
+        {/* Photo Section */}
+        <div className={`
+          relative flex-shrink-0 overflow-hidden bg-muted
+          ${member.isFounder ? "md:w-80 w-full h-80 md:h-auto min-h-[350px]" : "w-full h-72"}
+          border-b border-border md:border-b-0 ${member.isFounder ? 'md:border-r' : ''}
+        `}>
+          {member.photo ? (
             <>
               <Image
                 src={member.photo}
-                alt={`Photo of ${member.name}`}
-                fill
-                sizes="(max-width: 768px) 100vw, 224px"
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
-                style={{ objectPosition: member.objectPosition ?? "center 20%" }}
+                alt={member.name}
+                sizes={member.isFounder ? "(min-width: 768px) 320px, 100vw" : "100vw"}
+                fill={true}
+                loading="eager"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+                style={{ objectPosition: member.objectPosition }}
               />
-              {/* Subtle vignette */}
-              <div className="absolute inset-0 pointer-events-none" style={{
-                background: member.isFounder
-                  ? "linear-gradient(to right, transparent 60%, hsl(150 25% 5% / 0.6))"
-                  : "linear-gradient(to bottom, transparent 50%, hsl(150 25% 5% / 0.7))",
-              }} />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-60" />
             </>
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-2"
-              style={{ background: "hsl(150 20% 7%)", border: "1px dashed hsl(150 10% 15%)" }}>
-              {isPlaceholder ? (
-                <>
-                  <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="hsl(150 10% 25%)" strokeWidth={1}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                  </svg>
-                  <span style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", color: "hsl(150 10% 35%)", fontFamily: "var(--font-body)" }}>
-                    Coming soon
-                  </span>
-                </>
-              ) : (
-                <Initials name={member.name} />
-              )}
+            <div className="w-full h-full flex items-center justify-center bg-zinc-900">
+              <Initials name={member.name} />
             </div>
           )}
         </div>
 
-        {/* ── Text ──────────────────────────────────── */}
-        <div className="flex flex-col justify-center gap-4 p-6 flex-1 min-w-0">
-
-          {/* Role badge */}
-          <div className="flex items-center gap-3">
-            <div className="h-px w-5 flex-shrink-0" style={{
-              background: member.isFounder ? "hsl(42 45% 65% / 0.6)" : "hsl(338 65% 62% / 0.5)",
-            }} />
-            <span style={{
-              fontSize: "15px",
-              textTransform: "uppercase",
-              letterSpacing: "0.22em",
-              fontFamily: "var(--font-body)",
-              fontWeight: 500,
-              color: member.isFounder ? "hsl(42 45% 65%)" : "hsl(338 55% 68%)",
-            }}>
+        {/* Text Content */}
+        <div className="flex flex-col justify-center p-8 md:p-10 flex-1">
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`h-px w-6 ${member.isFounder ? 'bg-gold' : 'bg-pink-400'}`} />
+            <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${member.isFounder ? 'text-gold' : 'text-pink-soft'}`}>
               {member.role}
             </span>
           </div>
 
-          {/* Name */}
-          <div>
-            <h3 className="font-display font-light text-foreground leading-tight"
-              style={{ fontSize: member.isFounder ? "2rem" : "1.5rem" }}>
-              {member.name}
-            </h3>
-            {member.title && (
-              <p className="font-body text-muted-foreground mt-1" style={{ fontSize: "1.5rem", lineHeight: 1.5 }}>
-                {member.title}
-              </p>
-            )}
-          </div>
+          <h3 className={`font-display font-medium text-foreground leading-tight mb-2 ${member.isFounder ? 'text-4xl' : 'text-2xl'}`}>
+            {member.name}
+          </h3>
 
-          {/* Statement */}
+          {member.title && (
+            <p className="font-body text-pink-soft/80 font-medium text-[10px] uppercase tracking-widest mb-6">
+              {member.title}
+            </p>
+          )}
+
           {member.statement && (
-            <blockquote className="font-display italic text-foreground/75 leading-relaxed pl-4"
-              style={{
-                fontSize: "1.05rem",
-                borderLeft: `2px solid ${member.isFounder ? "hsl(42 45% 65% / 0.35)" : "hsl(338 65% 62% / 0.3)"}`,
-              }}>
+            <blockquote className={`
+              font-display italic text-foreground/70 leading-relaxed pl-6 border-l 
+              ${member.isFounder ? 'border-gold/30 text-lg' : 'border-pink-200/30 text-sm'}
+            `}>
               &ldquo;{member.statement}&rdquo;
             </blockquote>
           )}
         </div>
       </div>
-
-      {/* Bottom line */}
-      <div className="mt-auto h-px w-full" style={{
-        background: member.isFounder
-          ? "linear-gradient(90deg, transparent, hsl(42 45% 65% / 0.12), transparent)"
-          : "linear-gradient(90deg, transparent, hsl(338 65% 62% / 0.1), transparent)",
-      }} />
-    </div>
+    </motion.div>
   );
 }
 
 export default function Founders() {
   return (
-    <section className="bg-background py-20 px-4">
-      <div className="max-w-4xl mx-auto">
+    <section className="bg-background py-32 px-6 relative overflow-hidden">
+      
+      {/* Editorial Vertical Line */}
+      <div className="absolute left-6 lg:left-10 top-0 bottom-0 w-px bg-border/20 hidden md:block" />
 
-        {/* Header */}
-        <div className="text-center mb-14">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-px flex-1 max-w-[72px]" style={{ background: "linear-gradient(to right, transparent, hsl(42 45% 65% / 0.35))" }} />
-            <span className="font-body text-muted-foreground" style={{ fontSize: "18px", textTransform: "uppercase", letterSpacing: "0.25em" }}>
-              The People Behind the Mission
-            </span>
-            <div className="h-px flex-1 max-w-[72px]" style={{ background: "linear-gradient(to left, transparent, hsl(42 45% 65% / 0.35))" }} />
+      <div className="max-w-6xl mx-auto relative lg:pl-16">
+        
+        {/* Header Area */}
+        <div className="mb-20">
+          <div className="badge-pink mb-8 inline-flex items-center gap-2">
+            <Heart size={10} className="fill-current" />
+            Our Leadership
           </div>
 
-          <h2 className="font-display font-light text-foreground tracking-wide mb-4"
-            style={{ fontSize: "clamp(2rem, 5vw, 3rem)" }}>
-            Our{" "}
-            <span style={{
-              backgroundImage: "linear-gradient(135deg, hsl(42 45% 65%), hsl(338 65% 62%))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>
-              Founders
-            </span>
+          <h2 className="font-display text-5xl md:text-7xl font-light text-foreground tracking-tighter mb-6">
+            The Minds Behind <span className="italic text-gradient-duo">the Mission.</span>
           </h2>
 
-          <p className="font-body text-muted-foreground leading-relaxed mx-auto"
-            style={{ fontSize: "1.01rem", maxWidth: "380px" }}>
-            A team of medical experts, technologists, and advocates united by
-            one purpose — a world free from cancer.
+          <p className="font-body text-muted-foreground text-lg max-w-2xl leading-relaxed font-light">
+            A collective of medical experts and technical architects united by one purpose — 
+            a world where cancer is caught before it starts.
           </p>
-
-          {/* Gold-to-pink duo divider */}
-          <div className="mt-8 mx-auto" style={{
-            height: "1px",
-            maxWidth: "320px",
-            background: "linear-gradient(90deg, transparent, hsl(42 45% 65% / 0.4), hsl(338 65% 62% / 0.4), transparent)",
-          }} />
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {TEAM.filter(m => m.name !== "Coming Soon").map((member) => (
+        {/* Team Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {TEAM.map((member) => (
             <MemberCard key={member.name} member={member} />
           ))}
         </div>
 
-        {/* Office */}
-        <div className="mt-10 flex items-center justify-center gap-2">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="hsl(338 55% 62%)" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span className="font-body text-muted-foreground text-center" style={{ fontSize: "1.02rem" }}>
-            Zuhura Place Building, Opp. Quickmart, 4th Floor — Thika Town, Kenya
-          </span>
+        {/* Location / Footer */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-10 border-t border-border/40">
+          <div className="flex items-center gap-4">
+             <div className="p-2 rounded-full bg-pink-500/10 text-pink-500">
+               <MapPin size={16} />
+             </div>
+             <p className="font-body text-sm text-muted-foreground">
+               Zuhura Place Building, 4th Floor — Thika Town, Kenya
+             </p>
+          </div>
+          
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-gold font-bold">
+            <div className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+            Verified Mission
+          </div>
         </div>
 
       </div>
