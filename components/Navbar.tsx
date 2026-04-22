@@ -24,7 +24,15 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-glass border-b border-glass">
       <div className="container mx-auto flex items-center  justify-between h-18 px-6 lg:px-10">
         <a href="#" className="flex items-center gap-3">
-          <Image src="/team/logo.jpeg" alt="Cancer Free Foundation Logo" loading="eager" width={70} height={70} className="rounded-md" />
+          <Image
+  src="/team/logo.jpeg"
+  alt="Cancer Free Foundation Logo"
+  width={70}
+  height={70}
+  quality={100}
+  priority
+  className="rounded-md"
+/>
           <div className="flex flex-col">
             <span className="font-display text-lg tracking-tight text-foreground leading-tight">
               CFBF.

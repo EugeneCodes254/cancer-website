@@ -84,22 +84,31 @@ function MemberCard({ member }: { member: TeamMember }) {
       <div className={`flex ${member.isFounder ? "md:flex-row flex-col" : "flex-col"}`}>
         
         {/* Photo Section */}
-        <div className={`
-          relative flex-shrink-0 overflow-hidden bg-muted
-          ${member.isFounder ? "md:w-80 w-full h-80 md:h-auto min-h-[350px]" : "w-full h-72"}
-          border-b border-border md:border-b-0 ${member.isFounder ? 'md:border-r' : ''}
-        `}>
+
+<div
+  className={`
+    relative flex-shrink-0 overflow-hidden bg-muted
+    ${member.isFounder ? "md:w-80 w-full h-[350px]" : "w-full h-72"}
+    border-b border-border md:border-b-0 ${member.isFounder ? 'md:border-r' : ''}
+  `}
+>
           {member.photo ? (
             <>
-              <Image
-                src={member.photo}
-                alt={member.name}
-                sizes={member.isFounder ? "(min-width: 768px) 320px, 100vw" : "100vw"}
-                fill={true}
-                loading="eager"
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
-                style={{ objectPosition: member.objectPosition }}
-              />
+<Image
+  src={member.photo}
+  alt={member.name}
+  fill
+  priority={member.isFounder}
+  quality={90}
+  sizes={
+    member.isFounder
+      ? "(min-width: 1024px) 320px, (min-width: 768px) 320px, 100vw"
+      : "(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
+  }
+  className="object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 ease-out group-hover:scale-105"
+  style={{ objectPosition: member.objectPosition }}
+/>
+
               <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent opacity-60" />
             </>
           ) : (

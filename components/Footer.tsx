@@ -11,7 +11,17 @@ return(
       <div className="grid md:grid-cols-3 gap-12 mb-12">
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <Image src="/team/logo.jpeg" alt="Logo" width={28} height={28} loading="lazy" />
+            {/* <Image src="/team/logo.jpeg" alt="Logo" width={28} height={28} loading="lazy" /> */}
+                      <Image
+  src="/team/logo.jpeg"
+  alt="Cancer Free Foundation Logo"
+  width={90}
+  height={90}
+  quality={100}
+  priority
+  className="rounded-md"
+/>
+
             <span className="font-display text-lg text-foreground tracking-tight">CFBF.</span>
           </div>
           <p className="font-body text-sm text-muted-foreground leading-relaxed font-light">
